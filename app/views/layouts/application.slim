@@ -11,6 +11,10 @@ html
     .container
       .row
         .col-md-9
+          = render "shared/notifications"
           = yield
         .col-md-3
-          = render Currency.current
+          .currency
+            = render Currency.current
+
+    = console if Rails.env.development?

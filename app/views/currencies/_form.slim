@@ -1,16 +1,11 @@
-= form_for @currency, remote: true do |f|
-  - if @currency.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@currency.errors.count, 'error')} not allow to save:"
-      ul
-        - @currency.errors.full_messages.each do |msg|
-          li= msg
+= form_for @currency  do |f|
+  = render "shared/errors", resource: @currency
 
-  .field
+  .form-group
     = f.label :value
-    = f.text_field :value
-  .field
+    = f.number_field :value, step: "0.01", class: 'form-control currency', data: { "number-to-fixed" => "2", "number-stepfactor" => "100" }
+  .form-group
     = f.label :to
-    = f.datetime_select :to
+    = f.datetime_select :to, class: 'form-control'
   .actions
-    = f.submit 'Save'
+    = f.submit 'Save', class: "btn btn-primary"
