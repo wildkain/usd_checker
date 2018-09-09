@@ -8,7 +8,8 @@ html
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    .container
+    = render "shared/nav"
+    .container.mt-4
       .row
         .col-md-9
           = render "shared/notifications"
@@ -16,5 +17,7 @@ html
         .col-md-3
           .currency
             = render Currency.current
+      hr
+      =render 'shared/footer'
 
     = console if Rails.env.development?
