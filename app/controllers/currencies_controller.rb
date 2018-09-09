@@ -1,4 +1,5 @@
 class CurrenciesController < ApplicationController
+  after_action :publish_currency, only: %i(create update)
 
   def new
     @currency = Currency.last || Currency.new
@@ -26,6 +27,16 @@ class CurrenciesController < ApplicationController
   end
 
   private
+
+  def publish_currency
+    ActionCable.server.broadcast(
+                'currencies',
+                ApplicationController.render(
+                    partial: 'currencies/currency',
+                    locals: { currency: @currency }
+                )
+    )
+  end
 
   def currency_params
     params.require(:currency).permit(:value, :to)
