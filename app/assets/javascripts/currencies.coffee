@@ -9,5 +9,6 @@ $ ->
       console.log 'CurrenciesChannel connected!'
     received: (data) ->
       console.log(data)
+      console.log("Data received")
       $('#currency').replaceWith(data)
   })
