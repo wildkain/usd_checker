@@ -1,5 +1,4 @@
 class CurrenciesController < ApplicationController
-
   def new
     @currency = Currency.last || Currency.new
   end

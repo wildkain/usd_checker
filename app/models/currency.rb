@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class Currency < ApplicationRecord
   validates_presence_of :value
   validate :date_check
-   after_commit :publish_currency
+  after_commit :publish_currency
 
   def self.current
     if where('"to" > ?', Time.zone.now).exists?
@@ -14,18 +16,18 @@ class Currency < ApplicationRecord
   private
 
   def date_check
-    if self.to.present? && self.to < Time.zone.now
-      errors.add(:to, "Cannot setup value in the past")
+    if to.present? && to < Time.zone.now
+      errors.add(:to, 'Cannot setup value in the past')
     end
   end
 
   def publish_currency
     ActionCable.server.broadcast(
-        'currencies',
-        ApplicationController.render(
-            partial: 'currencies/currency',
-            locals: { currency: self }
-        )
+      'currencies',
+      ApplicationController.render(
+        partial: 'currencies/currency',
+        locals: { currency: self }
+      )
     )
   end
 

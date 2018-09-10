@@ -8,5 +8,4 @@ FactoryBot.define do
     value nil
     to nil
   end
-
 end
