@@ -15,13 +15,24 @@ RSpec.describe CurrenciesController, type: :controller do
   describe 'POST #create' do
     context 'with valid attributes' do
       it 'saves a new currency in database' do
-        expect { post :create, params: { currency: attributes_for(:currency) } }.to change(Currency, :count).by(1)
+        expect { post :create, params: {  format: :js, currency: attributes_for(:currency) } }.to change(Currency, :count).by(1)
       end
     end
     context 'with invalid attrs' do
       it 'should not create new currency' do
-        expect { post :create, params: { currency: attributes_for(:invalid_currency) } }.to_not change(Currency, :count)
+        expect { post :create, params: {format: :js, currency: attributes_for(:invalid_currency) } }.to_not change(Currency, :count)
       end
+    end
+  end
+
+  describe 'PATCH #update' do
+    let!(:currency) { create(:currency, value: 125)}
+    before(:each) do
+      patch :update, params: {  id: currency, currency: { value: 100}, format: :js }
+    end
+    it 'update currency in database' do
+      currency.reload
+      expect(currency.value).to eq 100.0
     end
   end
 end

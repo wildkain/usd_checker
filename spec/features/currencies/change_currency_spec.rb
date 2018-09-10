@@ -7,7 +7,7 @@ feature 'Change current currency', %q{
 }do
   hour = (Time.zone.now + 2.hours).strftime("%I")
 
-  scenario 'user change currency' do
+  scenario 'user change currency', js:true do
     visit '/admin'
     fill_in 'Value', with: 125
     select "#{hour}", :from =>  "currency[to(4i)]"
@@ -17,7 +17,7 @@ feature 'Change current currency', %q{
     expect(page).to have_content "Currency succesfuly saved!"
   end
 
-  scenario 'user change currency' do
+  scenario 'user change currency', js:true  do
     visit '/admin'
     fill_in 'Value', with: 125
     select "#{hour}", :from =>  "currency[to(4i)]"
